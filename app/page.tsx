@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 
 import HeroSection from "@/components/HeroSection";
 import FeaturedSection from "@/components/FeaturedSection";
+import WhyWatchSection from "@/components/WhyWatchSection";
 
 type Playthrough = {
   id: string;
@@ -45,6 +46,8 @@ export default async function Home() {
       {featuredPlaythroughs && featuredPlaythroughs.length > 0 && (
         <FeaturedSection playthroughs={featuredPlaythroughs as Playthrough[]} />
       )}
+
+      <WhyWatchSection />
     </>
   );
 }

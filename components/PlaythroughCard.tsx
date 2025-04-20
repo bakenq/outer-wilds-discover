@@ -29,7 +29,10 @@ export default function PlaythroughCard({
   const placeholderThumbnail = "/placeholder-thumbnail.png";
 
   return (
-    <Card className='overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:shadow-lg hover:scale-[1.03] flex flex-col h-full'>
+    <Card
+      className='overflow-hidden transition-all duration-200 ease-in-out hover:shadow-primary/20 hover:shadow-lg hover:scale-[1.05] flex flex-col h-full backface-hidden'
+      style={{ willChange: "transform" }}
+    >
       {/* Link wrapping image container */}
       <a
         href={video_url}

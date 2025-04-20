@@ -6,6 +6,10 @@
   .text-balance {
     text-wrap: balance;
   }
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; /* Safari/older Chrome */
+  }
 }
 
 @layer base {

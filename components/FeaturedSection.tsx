@@ -2,6 +2,7 @@
 
 import PlaythroughList from "./PlaythroughList";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -28,7 +29,17 @@ export default function FeaturedSection({
     <section className='py-12 md:py-16 lg:py-20 bg-background'>
       {" "}
       {/* Use theme background */}
-      <div className='container mx-auto px-4'>
+      <motion.div
+        className='container mx-auto px-4'
+        initial='hidden'
+        whileInView='visible'
+        viewport={{ once: true, amount: 0.2 }} // Only animate once when in view (20%)
+        transition={{ duration: 0.5 }}
+        variants={{
+          hidden: { opacity: 0, y: 30 },
+          visible: { opacity: 1, y: 0 },
+        }}
+      >
         {/* Section Header */}
         <div className='mb-8 md:mb-10 flex justify-between items-center'>
           <div>
@@ -44,11 +55,11 @@ export default function FeaturedSection({
           <Button
             asChild
             variant='ghost'
-            className='hidden sm:inline-flex text-primary hover:text-primary/90 hover:bg-primary/20'
+            className='hidden sm:inline-flex text-primary hover:text-primary/90 hover:bg-primary/15'
           >
             <Link href='/playthroughs'>
               See all playthroughs
-              <ArrowRight className='ml-2 h-4 w-4' /> {/* Optional Icon */}
+              <ArrowRight className='ml-2 h-4 w-4' />
             </Link>
           </Button>
         </div>
@@ -68,11 +79,11 @@ export default function FeaturedSection({
           >
             <Link href='/playthroughs'>
               See all playthroughs
-              <ArrowRight className='ml-2 h-4 w-4' /> {/* Optional Icon */}
+              <ArrowRight className='ml-2 h-4 w-4' />
             </Link>
           </Button>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

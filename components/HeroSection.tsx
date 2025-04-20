@@ -89,10 +89,15 @@ export default function HeroSection() {
           transition={{ duration: 0.5 }}
           className='flex flex-col sm:flex-row gap-4 justify-center'
         >
-          <Button asChild size='lg' className='text-base'>
+          <Button
+            asChild
+            size='lg'
+            className='text-base bg-primary hover:bg-orange-400 transition-all duration-200 ease-in-out hover:scale-[1.03] hover:shadow-lg hover:shadow-primary/20 backface-hidden'
+            style={{ willChange: "transform" }}
+          >
             <Link href='/playthroughs'>Discover Playthroughs</Link>
           </Button>
-          {/* Optional Secondary Button - Add later if needed */}
+
           <Button
             asChild
             size='lg'
