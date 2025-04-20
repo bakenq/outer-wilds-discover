@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -36,11 +38,11 @@ export default function PlaythroughCard({
             src={thumbnail_url || placeholderThumbnail}
             alt={`Thumbnail for ${title}`}
             fill // Use fill to cover the container
-            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' // Help browser optimize image loading
+            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             style={{ objectFit: "cover" }} // might crop
             // add placeholder/blur effect
-            placeholder='blur'
-            blurDataURL='data:...'
+            //placeholder='blur'
+            //blurDataURL='data:...'
             // Or handle errors
             onError={(e) => {
               // If the thumbnail fails, try setting it to the placeholder

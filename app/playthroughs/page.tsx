@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
+import PlaythroughList from "@/components/PlaythroughList";
 
 // Optional: Define a type for better type safety later when building components
 // Might use later
@@ -39,7 +40,8 @@ export default async function PlaythroughsPage() {
   if (error) {
     console.error("Error fetching playthroughs:", error);
     return (
-      <div className='container mx-auto p-4 text-red-500'>
+      <div className='text-red-500'>
+        <h1 className='text-2xl font-bold mb-4'>Error</h1>
         <p>
           Error loading playthroughs. Please check the server logs or try again
           later.
@@ -52,23 +54,20 @@ export default async function PlaythroughsPage() {
   if (!playthroughs || playthroughs.length === 0) {
     console.log("No playthroughs found in the database.");
     return (
-      <div className='container mx-auto p-4'>
+      <div>
         <h1 className='text-2xl font-bold mb-4'>Outer Wilds Playthroughs</h1>
         <p>No playthroughs have been added yet. Check back soon!</p>
       </div>
     );
   }
 
-  // If data is fetched successfully, display it (initially as raw JSON)
+  // If data is fetched successfully, render list of playthroughs
   console.log("Successfully fetched playthroughs:", playthroughs.length);
   return (
-    <div className='container mx-auto p-4'>
+    <>
       <h1 className='text-2xl font-bold mb-4'>Outer Wilds Playthroughs</h1>
-      <p className='mb-4'>Here's the raw data fetched from Supabase:</p>
-      <pre className='bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-x-auto text-sm'>
-        {JSON.stringify(playthroughs, null, 2)}
-      </pre>
-    </div>
+      <PlaythroughList playthroughs={playthroughs as Playthrough[]} />
+    </>
   );
 }
 
