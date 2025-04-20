@@ -44,7 +44,7 @@ export default function FeaturedSection({
           <Button
             asChild
             variant='ghost'
-            className='hidden sm:inline-flex text-primary hover:text-primary/90'
+            className='hidden sm:inline-flex text-primary hover:text-primary/90 hover:bg-primary/20'
           >
             <Link href='/playthroughs'>
               See all playthroughs
@@ -64,7 +64,7 @@ export default function FeaturedSection({
           <Button
             asChild
             variant='outline'
-            className='text-primary border-primary hover:bg-primary/10 hover:text-primary'
+            className='text-primary border-primary hover:bg-primary/20 hover:text-primary'
           >
             <Link href='/playthroughs'>
               See all playthroughs
