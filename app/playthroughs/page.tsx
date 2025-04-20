@@ -40,9 +40,9 @@ export default async function PlaythroughsPage() {
   if (error) {
     console.error("Error fetching playthroughs:", error);
     return (
-      <div className='text-red-500'>
-        <h1 className='text-2xl font-bold mb-4'>Error</h1>
-        <p>
+      <div className='container mx-auto p-4 md:p-6 lg:p-8'>
+        <h1 className='text-2xl font-bold mb-4 text-destructive'>Error</h1>
+        <p className='text-destructive-foreground'>
           Error loading playthroughs. Please check the server logs or try again
           later.
         </p>
@@ -54,9 +54,11 @@ export default async function PlaythroughsPage() {
   if (!playthroughs || playthroughs.length === 0) {
     console.log("No playthroughs found in the database.");
     return (
-      <div>
+      <div className='container mx-auto p-4 md:p-6 lg:p-8'>
         <h1 className='text-2xl font-bold mb-4'>Outer Wilds Playthroughs</h1>
-        <p>No playthroughs have been added yet. Check back soon!</p>
+        <p className='text-muted-foreground'>
+          No playthroughs have been added yet. Check back soon!
+        </p>
       </div>
     );
   }
@@ -64,10 +66,12 @@ export default async function PlaythroughsPage() {
   // If data is fetched successfully, render list of playthroughs
   console.log("Successfully fetched playthroughs:", playthroughs.length);
   return (
-    <>
-      <h1 className='text-2xl font-bold mb-4'>Outer Wilds Playthroughs</h1>
+    <div className='container mx-auto p-4 md:p-6 lg:p-8'>
+      <h1 className='text-3xl font-bold mb-6 md:mb-8'>
+        Outer Wilds Playthroughs
+      </h1>
       <PlaythroughList playthroughs={playthroughs as Playthrough[]} />
-    </>
+    </div>
   );
 }
 

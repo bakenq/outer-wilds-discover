@@ -1,7 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface PlaythroughCardProps {
   id: string;
@@ -20,51 +26,58 @@ export default function PlaythroughCard({
   thumbnail_url,
 }: PlaythroughCardProps) {
   // Basic placeholder image if no thumbnail is provided
-  const placeholderThumbnail = "/placeholder-thumbnail.png"; // add this image later
+  const placeholderThumbnail = "/placeholder-thumbnail.png";
 
   return (
-    <div className='border rounded-lg overflow-hidden shadow-lg bg-card dark:border-neutral-700 transition-transform duration-200 hover:scale-[1.02]'>
-      {/* Link the entire card or just the image/title */}
+    <Card className='overflow-hidden transition-all duration-300 hover:shadow-primary/20 hover:shadow-lg hover:scale-[1.03] flex flex-col h-full'>
+      {/* Link wrapping image container */}
       <a
         href={video_url}
         target='_blank'
         rel='noopener noreferrer'
         aria-label={`Watch ${title}`}
+        className='block'
       >
-        <div className='relative aspect-video'>
-          {" "}
-          {/* Maintain 16:9 aspect ratio */}
-          <Image
-            src={thumbnail_url || placeholderThumbnail}
-            alt={`Thumbnail for ${title}`}
-            fill // Use fill to cover the container
-            sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-            style={{ objectFit: "cover" }} // might crop
-            // add placeholder/blur effect
-            //placeholder='blur'
-            //blurDataURL='data:...'
-            // Or handle errors
-            onError={(e) => {
-              // If the thumbnail fails, try setting it to the placeholder
-              const target = e.target as HTMLImageElement;
-              if (target.src !== placeholderThumbnail) {
-                target.src = placeholderThumbnail;
-              }
-            }}
-          />
-        </div>
+        <CardHeader className='p-0'>
+          <div className='relative aspect-video'>
+            {/* Force 16:9*/}
+            <Image
+              src={thumbnail_url || placeholderThumbnail}
+              alt={`Thumbnail for ${title}`}
+              fill
+              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+              className='object-cover'
+              onError={(e) => {
+                // If the thumbnail fails, try setting it to the placeholder
+                const target = e.target as HTMLImageElement;
+                if (target.src !== placeholderThumbnail) {
+                  target.src = placeholderThumbnail;
+                }
+              }}
+            />
+          </div>
+        </CardHeader>
       </a>
-      <div className='p-4'>
-        <h3 className='font-semibold text-lg mb-1 leading-tight text-foreground hover:text-primary'>
-          <a href={video_url} target='_blank' rel='noopener noreferrer'>
+      {/* flex-grow ensures content pushes footer down */}
+      <CardContent className='p-4 flex-grow'>
+        {/* Link wrapping title */}
+        <a
+          href={video_url}
+          target='_blank'
+          rel='noopener noreferrer'
+          className='block'
+        >
+          <CardTitle className='text-base font-semibold leading-tight hover:text-primary transition-colors line-clamp-2 min-h-10'>
             {title}
-          </a>
-        </h3>
-        {streamer_name && ( // Only display if streamer name exists
+          </CardTitle>
+        </a>
+      </CardContent>
+      {streamer_name && ( // Only display if streamer name exists
+        <CardFooter className='p-4 pt-0 min-h-5'>
           <p className='text-sm text-muted-foreground'>By: {streamer_name}</p>
-        )}
-        {/* Could add more details here later: platform, description snippet, date etc */}
-      </div>
-    </div>
+        </CardFooter>
+      )}
+      {/* Could add more details here later: platform, description snippet, date etc */}
+    </Card>
   );
 }
