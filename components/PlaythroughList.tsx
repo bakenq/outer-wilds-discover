@@ -13,6 +13,7 @@ interface Playthrough {
 
 interface PlaythroughListProps {
   playthroughs: Playthrough[]; // Expects an array of Playthrough objects
+  gridCols?: string; // Optional prop for grid columns
 }
 
 // Animation Variants
@@ -37,8 +38,12 @@ const itemVariants = {
   },
 };
 
+const defaultGridCols =
+  "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4";
+
 export default function PlaythroughList({
   playthroughs,
+  gridCols = defaultGridCols,
 }: PlaythroughListProps) {
   // If no playthroughs are passed (e.g., initial load or error upstream), display nothing
   if (!playthroughs || playthroughs.length === 0) {
@@ -48,7 +53,7 @@ export default function PlaythroughList({
 
   return (
     <motion.div
-      className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6'
+      className={`grid ${gridCols} gap-4 md:gap-6`} // Use the prop or default
       variants={containerVariants}
       initial='hidden'
       animate='visible'
