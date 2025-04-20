@@ -196,8 +196,12 @@ export default async function PlaythroughPage({
           variant='ghost'
           className='hidden sm:inline-flex text-primary hover:text-primary/90 hover:bg-primary/15'
         >
-          <Link href='/playthroughs'>
-            Watch on original on {playthrough.platform || "Source"}
+          <Link
+            href={playthrough.video_url}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Watch original on {playthrough.platform || "Source"}
             <ArrowRight className='ml-2 h-4 w-4' />
           </Link>
         </Button>
