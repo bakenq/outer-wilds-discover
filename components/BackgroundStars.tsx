@@ -27,6 +27,10 @@ export default function BackgroundStars() {
 
   const particleOptions: ISourceOptions = useMemo(
     () => ({
+      fullScreen: {
+        enable: false,
+        zIndex: 0,
+      },
       background: { color: { value: "transparent" } },
       fpsLimit: 120,
       interactivity: {
@@ -41,15 +45,15 @@ export default function BackgroundStars() {
         move: {
           direction: MoveDirection.top,
           enable: true,
-          speed: { min: 0.1, max: 0.5 },
+          speed: { min: 0.1, max: 0.6 },
           straight: true,
           outModes: {
             default: OutMode.out,
           },
         },
-        number: { density: { enable: true, area: 800 }, value: 150 },
+        number: { density: { enable: true, area: 800 }, value: 200 },
         opacity: {
-          value: { min: 0.1, max: 0.7 },
+          value: { min: 0.15, max: 0.8 },
           animation: {
             enable: true,
             speed: 0.5,
