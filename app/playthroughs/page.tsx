@@ -13,6 +13,8 @@ type Playthrough = {
   created_at: string;
 };
 
+export const revalidate = 600;
+
 // Server Component
 export default async function PlaythroughsPage() {
   // Get the cookie store from the incoming request

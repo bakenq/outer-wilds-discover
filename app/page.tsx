@@ -13,6 +13,8 @@ type Playthrough = {
   thumbnail_url: string | null;
 };
 
+export const revalidate = 600;
+
 export default async function Home() {
   // --- Fetch Featured Playthroughs ---
   const cookieStore = cookies();

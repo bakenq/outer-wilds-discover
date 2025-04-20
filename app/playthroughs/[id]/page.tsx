@@ -46,7 +46,50 @@ function getYouTubeVideoId(url: string): string | null {
   return null;
 }
 
-// Make the component async to fetch data
+export const revalidate = 600;
+
+export async function generateStaticParams(): Promise<{ id: string }[]> {
+  console.log("Attempting to generate static params for playthroughs...");
+
+  // NOTE: cookies() is not available during build time in generateStaticParams.
+  // need a way to create a Supabase client without relying on request cookies.
+  // Use environment variables directly (if anon key allows reading IDs)
+  // Requires NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in the build environment
+  const supabase_url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabase_key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabase_url || !supabase_key) {
+    console.error(
+      "Supabase URL or Anon Key missing in build environment for generateStaticParams."
+    );
+    return []; // Cannot fetch without credentials
+  }
+
+  // Temporarily create a client directly using @supabase/supabase-js
+  // This bypasses the need for cookies from @supabase/ssr FOR THIS BUILD STEP ONLY
+  // Needs RLS policy to allow reading 'id' from 'playthroughs' for the anon role.
+  const { createClient: createSupabaseClient } = await import(
+    "@supabase/supabase-js"
+  );
+  const supabase = createSupabaseClient(supabase_url, supabase_key);
+
+  const { data: playthroughs, error } = await supabase
+    .from("playthroughs")
+    .select("id");
+
+  if (error || !playthroughs) {
+    console.error("Error fetching IDs for generateStaticParams:", error);
+    return []; // Return empty array on error
+  }
+
+  console.log(
+    `Generating static pages for ${playthroughs.length} playthroughs.`
+  );
+  return playthroughs.map((playthrough) => ({
+    id: playthrough.id, // Ensure the key matches the dynamic segment name '[id]'
+  }));
+}
+
 export default async function PlaythroughPage({
   params,
 }: PlaythroughPageProps) {
