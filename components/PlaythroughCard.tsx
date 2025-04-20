@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -22,7 +23,6 @@ export default function PlaythroughCard({
   id,
   title,
   streamer_name,
-  video_url,
   thumbnail_url,
 }: PlaythroughCardProps) {
   // Basic placeholder image if no thumbnail is provided
@@ -34,11 +34,9 @@ export default function PlaythroughCard({
       style={{ willChange: "transform" }}
     >
       {/* Link wrapping image container */}
-      <a
-        href={video_url}
-        target='_blank'
-        rel='noopener noreferrer'
-        aria-label={`Watch ${title}`}
+      <Link
+        href={`/playthroughs/${id}`}
+        aria-label={`View details for ${title}`}
         className='block'
       >
         <CardHeader className='p-0'>
@@ -60,20 +58,15 @@ export default function PlaythroughCard({
             />
           </div>
         </CardHeader>
-      </a>
+      </Link>
       {/* flex-grow ensures content pushes footer down */}
       <CardContent className='p-4 flex-grow'>
         {/* Link wrapping title */}
-        <a
-          href={video_url}
-          target='_blank'
-          rel='noopener noreferrer'
-          className='block'
-        >
+        <Link href={`/playthroughs/${id}`} className='block'>
           <CardTitle className='text-base font-semibold leading-tight hover:text-primary transition-colors line-clamp-2 min-h-10'>
             {title}
           </CardTitle>
-        </a>
+        </Link>
       </CardContent>
       {streamer_name && ( // Only display if streamer name exists
         <CardFooter className='p-4 pt-0 min-h-5'>

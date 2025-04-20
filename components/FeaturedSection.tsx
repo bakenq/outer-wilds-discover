@@ -46,7 +46,7 @@ export default function FeaturedSection({
             <h2 className='text-3xl font-bold tracking-tight sm:text-4xl mb-2'>
               Featured Playthroughs
             </h2>
-            <p className='text-muted-foreground max-w-2xl'>
+            <p className='text-muted-foreground max-w-3xl'>
               Handpicked adventures that capture the wonder, curiosity, and
               emotional depth of Outer Wilds.
             </p>
