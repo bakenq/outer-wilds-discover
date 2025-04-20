@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Outer Wilds Discover 🚀
 
-## Getting Started
+This is a personal project for the incredible game **Outer Wilds**. Since you can only truly experience its mysteries once, many of us enjoy watching _others_ take their first steps into the solar system. This site aims to be a cozy spot to discover new playthroughs (Let's Plays, VODs) to watch!
 
-First, run the development server:
+Built as a portfolio piece to practice and showcase full-stack development with some cool modern tech.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**[Link to Live Demo]()** _(To be deployed)_
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What it Does ✨
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Browse Playthroughs:** See a list of curated Outer Wilds playthroughs.
+- **Featured Section:** Quick look at some handpicked gems on the landing page.
+- **Watch Embedded:** Click through to dedicated pages to watch videos directly on the site via embedded YouTube player.
+- **Themed:** A dark, spacey theme inspired by the game, built with Tailwind & Shadcn.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack 🛠️
 
-## Learn More
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **Backend/DB:** Supabase (PostgreSQL + SSR Helpers)
+- **Styling:** Tailwind CSS + Shadcn/UI
+- **Animation:** Framer Motion, tsparticles
+- **(Deployment):** Vercel
 
-To learn more about Next.js, take a look at the following resources:
+## Future Ideas 🌌
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- YouTube API integration to find videos automatically.
+- Search / Filtering.
+- User accounts (favorites, maybe submissions?).
+- Tags (Blind, DLC, etc.).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Disclaimer
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This is a fan project and not affiliated with Mobius Digital or Annapurna Interactive. Please support the official game!
