@@ -1,5 +1,5 @@
 // lib/supabase/server.ts
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { type ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 export function createClient(cookieStore: ReadonlyRequestCookies) {
@@ -16,6 +16,7 @@ export function createClient(cookieStore: ReadonlyRequestCookies) {
             cookiesToSet.forEach(({ name, value, options }) => {
               cookieStore.set(name, value, options);
             });
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
           } catch (error) {
             // The `setAll` method was called from a Server Component.
             // can be ignored if middleware exists?

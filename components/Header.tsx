@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className='bg-card shadow-md'>
+    <header className='bg-card shadow-md sticky top-0 z-40'>
       <nav className='container mx-auto px-4 py-3 flex justify-between items-center'>
         <Link
           href='/'
