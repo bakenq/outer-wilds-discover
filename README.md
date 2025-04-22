@@ -1,10 +1,12 @@
 # Outer Wilds Discover 🚀
 
+#### Still WIP
+
 This is a personal project for the incredible game **Outer Wilds**. Since you can only truly experience its mysteries once, many of us enjoy watching _others_ take their first steps into the solar system. This site aims to be a cozy spot to discover new playthroughs (Let's Plays, VODs) to watch!
 
 Built as a portfolio piece to practice and showcase full-stack development with some cool modern tech.
 
-**[Link to Live Demo]()** _(To be deployed)_
+**[Link to Live Demo](https://outer-wilds-discover.vercel.app/)**
 
 ## What it Does ✨
 
@@ -24,6 +26,7 @@ Built as a portfolio piece to practice and showcase full-stack development with 
 
 ## Future Ideas 🌌
 
+- Playthrough submitting
 - YouTube API integration to find videos automatically.
 - Search / Filtering.
 - User accounts (favorites, maybe submissions?).
