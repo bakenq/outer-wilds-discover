@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import HeroSection from "@/components/HeroSection";
 import FeaturedSection from "@/components/FeaturedSection";
 import WhyWatchSection from "@/components/WhyWatchSection";
+import QuoteSection from "@/components/QuoteSection";
 
 import type { Playthrough } from "@/lib/types";
 
@@ -44,6 +45,7 @@ export default async function Home() {
       )}
 
       <WhyWatchSection />
+      <QuoteSection />
     </>
   );
 }

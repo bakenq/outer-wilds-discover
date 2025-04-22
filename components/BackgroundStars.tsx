@@ -10,7 +10,11 @@ import {
 } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 
-export default function BackgroundStars() {
+interface SectionParticlesProps {
+  id: string;
+}
+
+export default function BackgroundStars({ id }: SectionParticlesProps) {
   const [init, setInit] = useState(false);
 
   useEffect(() => {
@@ -73,7 +77,7 @@ export default function BackgroundStars() {
     <div className='absolute inset-0 z-[-1]'>
       {init && (
         <Particles
-          id='tsparticles'
+          id={id}
           particlesLoaded={particlesLoaded}
           options={particleOptions}
           className='absolute inset-0'

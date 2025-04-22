@@ -56,6 +56,21 @@ const config: Config = {
       borderRadius: {
         lg: "var(--radius)",
       },
+      keyframes: {
+        "pulse-glow": {
+          "0%, 100%": {
+            filter: "drop-shadow(0 0 3px hsl(var(--primary) / 0.4))",
+            opacity: "0.85",
+          },
+          "50%": {
+            filter: "drop-shadow(0 0 8px hsl(var(--primary) / 0.7))",
+            opacity: "1",
+          },
+        },
+      },
+      animation: {
+        "pulse-glow": "pulse-glow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+      },
     },
   },
   plugins: [tailwindcssAnimate, tailwindcssTypography],

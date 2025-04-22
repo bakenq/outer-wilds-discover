@@ -8,7 +8,7 @@ import BackgroundStars from "./BackgroundStars";
 export default function HeroSection() {
   return (
     <section className='relative flex flex-col items-center justify-center min-h-[calc(50vh-var(--header-height,4rem))] overflow-hidden'>
-      <BackgroundStars />
+      <BackgroundStars id='hero-particles' />
 
       {/* Blurred Planets */}
       {/* Planet 1 */}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Orbit } from "lucide-react";
 
 export default function Header() {
   return (
@@ -8,9 +9,13 @@ export default function Header() {
         {/* Logo? */}
         <Link
           href='/'
-          className='font-bold text-xl text-foreground hover:text-primary transition-colors'
+          className='group font-bold text-xl text-foreground hover:text-primary transition-colors flex items-center gap-2'
         >
-          Outer Wilds Discover
+          <Orbit
+            className='h-5 w-5 text-foreground transition-colors group-hover:text-primary'
+            strokeWidth={2}
+          />
+          <span>Outer Wilds Discover</span>
         </Link>
         {/* Navigation */}
         <div className='flex items-center gap-6'>
