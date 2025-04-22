@@ -1,17 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
+
 import PlaythroughList from "@/components/PlaythroughList";
 
-// Optional: Define a type for better type safety later when building components
-// Might use later
-type Playthrough = {
-  id: string;
-  title: string;
-  streamer_name: string | null;
-  video_url: string;
-  thumbnail_url: string | null;
-  created_at: string;
-};
+import type { Playthrough } from "@/lib/types";
 
 export const revalidate = 600;
 

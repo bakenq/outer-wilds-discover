@@ -6,13 +6,8 @@ import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 
-interface Playthrough {
-  id: string;
-  title: string;
-  streamer_name: string | null;
-  video_url: string;
-  thumbnail_url: string | null;
-}
+import type { Playthrough } from "@/lib/types";
+
 interface FeaturedSectionProps {
   playthroughs: Playthrough[];
 }

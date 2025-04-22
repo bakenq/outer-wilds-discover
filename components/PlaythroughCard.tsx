@@ -10,14 +10,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-interface PlaythroughCardProps {
-  id: string;
-  title: string;
-  streamer_name: string | null;
-  video_url: string;
-  thumbnail_url: string | null;
-  // Add other fields if needed later (e.g., description, platform)
-}
+import type { Playthrough } from "@/lib/types";
+
+type PlaythroughCardProps = Pick<
+  Playthrough,
+  "id" | "title" | "streamer_name" | "video_url" | "thumbnail_url"
+>;
 
 export default function PlaythroughCard({
   id,

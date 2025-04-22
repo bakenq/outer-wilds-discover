@@ -5,13 +5,7 @@ import HeroSection from "@/components/HeroSection";
 import FeaturedSection from "@/components/FeaturedSection";
 import WhyWatchSection from "@/components/WhyWatchSection";
 
-type Playthrough = {
-  id: string;
-  title: string;
-  streamer_name: string | null;
-  video_url: string;
-  thumbnail_url: string | null;
-};
+import type { Playthrough } from "@/lib/types";
 
 export const revalidate = 600;
 

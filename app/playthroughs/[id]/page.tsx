@@ -6,18 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { PostgrestError } from "@supabase/supabase-js";
 
-// Type for a single playthrough (can be shared/imported)
-type Playthrough = {
-  id: string;
-  title: string;
-  streamer_name: string | null;
-  video_url: string;
-  thumbnail_url: string | null;
-  description: string | null;
-  created_at: string;
-  platform: string | null;
-  // Add other relevant fields like platform, channel_url etc.
-};
+import type { Playthrough } from "@/lib/types";
 
 interface PlaythroughPageProps {
   params: {
@@ -52,9 +41,6 @@ export async function generateStaticParams(): Promise<{ id: string }[]> {
   console.log("Attempting to generate static params for playthroughs...");
 
   // NOTE: cookies() is not available during build time in generateStaticParams.
-  // need a way to create a Supabase client without relying on request cookies.
-  // Use environment variables directly (if anon key allows reading IDs)
-  // Requires NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in the build environment
   const supabase_url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabase_key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -62,12 +48,9 @@ export async function generateStaticParams(): Promise<{ id: string }[]> {
     console.error(
       "Supabase URL or Anon Key missing in build environment for generateStaticParams."
     );
-    return []; // Cannot fetch without credentials
+    return [];
   }
 
-  // Temporarily create a client directly using @supabase/supabase-js
-  // This bypasses the need for cookies from @supabase/ssr FOR THIS BUILD STEP ONLY
-  // Needs RLS policy to allow reading 'id' from 'playthroughs' for the anon role.
   const { createClient: createSupabaseClient } = await import(
     "@supabase/supabase-js"
   );
@@ -79,25 +62,25 @@ export async function generateStaticParams(): Promise<{ id: string }[]> {
 
   if (error || !playthroughs) {
     console.error("Error fetching IDs for generateStaticParams:", error);
-    return []; // Return empty array on error
+    return [];
   }
 
   console.log(
     `Generating static pages for ${playthroughs.length} playthroughs.`
   );
   return playthroughs.map((playthrough) => ({
-    id: playthrough.id, // Ensure the key matches the dynamic segment name '[id]'
+    id: playthrough.id,
   }));
 }
 
 export default async function PlaythroughPage({
   params,
 }: PlaythroughPageProps) {
-  const { id } = params; // Extract the id from the URL parameters
+  const { id } = params;
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  // Fetch the single playthrough matching the ID
+  // Fetch single playthrough matching the ID
   const {
     data: playthrough,
     error,
@@ -114,22 +97,19 @@ export default async function PlaythroughPage({
             created_at,
             platform
         `
-    ) // Select desired columns
-    .eq("id", id) // Filter by the ID from the URL
-    .single(); // Expect only one result
+    )
+    .eq("id", id)
+    .single();
 
   // Handle errors or not found
   if (error) {
     console.error(`Error fetching playthrough ${id}:`, error);
-    // Option 1: Show generic error (less ideal)
-    // return <div>Error loading playthrough.</div>;
-    // Option 2: Trigger Next.js 404 page
     notFound();
   }
 
   if (!playthrough) {
     console.log(`Playthrough with ID ${id} not found.`);
-    notFound(); // Trigger 404 if no playthrough is returned
+    notFound();
   }
 
   // Extract YouTube Video ID for embedding
@@ -166,7 +146,7 @@ export default async function PlaythroughPage({
         {videoId ? (
           <iframe
             width='100%'
-            height='100%' // Takes height from aspect-video parent
+            height='100%'
             src={`https://www.youtube.com/embed/${videoId}`}
             title={playthrough.title || "YouTube video player"}
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
