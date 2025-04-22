@@ -6,33 +6,15 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { PostgrestError } from "@supabase/supabase-js";
 
+import YouTubeEmbed from "@/components/YouTubeEmbed";
+import { extractVideoId } from "@/lib/utils";
+
 import type { Playthrough } from "@/lib/types";
 
 interface PlaythroughPageProps {
   params: {
     id: string;
   };
-}
-
-// Helper function to extract YouTube Video ID
-function getYouTubeVideoId(url: string): string | null {
-  if (!url) return null;
-  try {
-    const urlObj = new URL(url);
-    if (
-      urlObj.hostname === "www.youtube.com" ||
-      urlObj.hostname === "youtube.com"
-    ) {
-      return urlObj.searchParams.get("v");
-    }
-    if (urlObj.hostname === "youtu.be") {
-      return urlObj.pathname.substring(1);
-    }
-  } catch (error) {
-    console.error("Error parsing video URL:", error);
-    return null;
-  }
-  return null;
 }
 
 export const revalidate = 600;
@@ -99,25 +81,22 @@ export default async function PlaythroughPage({
         `
     )
     .eq("id", id)
-    .single();
+    .single<Playthrough>();
 
   // Handle errors or not found
-  if (error) {
-    console.error(`Error fetching playthrough ${id}:`, error);
-    notFound();
-  }
-
-  if (!playthrough) {
-    console.log(`Playthrough with ID ${id} not found.`);
+  if (error || !playthrough) {
+    if (error) console.error("Error fetching playthrough:", id, error);
     notFound();
   }
 
   // Extract YouTube Video ID for embedding
-  const videoId = getYouTubeVideoId(playthrough.video_url);
+  const { videoId, platform } = extractVideoId(
+    playthrough.video_url,
+    playthrough.platform
+  );
 
   return (
     <div className='container mx-auto p-4 md:p-6 lg:p-8'>
-      {/* Back link */}
       <Button
         asChild
         variant='ghost'
@@ -128,79 +107,59 @@ export default async function PlaythroughPage({
           Browse Playthroughs
         </Link>
       </Button>
+      {/* Page Header */}
+      <div className='mb-6 md:mb-8'>
+        <h1 className='text-2xl md:text-3xl lg:text-4xl font-bold mb-1 text-balance'>
+          {" "}
+          {/* Slightly larger h1 */}
+          {playthrough.title}
+        </h1>
+        {playthrough.streamer_name && (
+          <p className='text-lg text-muted-foreground'>
+            By: {playthrough.streamer_name}
+          </p>
+        )}
 
-      {/* Playthrough Title */}
-      <h1 className='text-2xl md:text-3xl font-bold mb-2'>
-        {playthrough.title}
-      </h1>
-
-      {/* Streamer Info */}
-      {playthrough.streamer_name && (
-        <p className='text-md text-muted-foreground mb-6'>
-          By: {playthrough.streamer_name}
-        </p>
-      )}
+        <a
+          href={playthrough.video_url}
+          target='_blank'
+          rel='noopener noreferrer'
+          className='text-xs text-muted-foreground hover:text-primary transition-colors mt-2 inline-flex items-center group'
+        >
+          <span>
+            Watch on {platform !== "Unknown" ? platform : "Original Platform"}
+          </span>
+          <ArrowRight className='relative top-[0.5px] ml-1.5 h-3 w-3 transition-transform duration-200 group-hover:translate-x-1' />{" "}
+          {/* Added relative top-[0.5px] */}
+        </a>
+      </div>
 
       {/* Video Embed Area */}
-      <div className='aspect-video w-full max-w-4xl mx-auto mb-6 bg-card rounded overflow-hidden shadow-lg'>
-        {videoId ? (
-          <iframe
-            width='100%'
-            height='100%'
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title={playthrough.title || "YouTube video player"}
-            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-            referrerPolicy='strict-origin-when-cross-origin'
-            allowFullScreen
-          ></iframe>
+      <div className='aspect-video w-full max-w-4xl mx-auto bg-card rounded-lg overflow-hidden shadow-lg mb-8 md:mb-10'>
+        {/* --- Conditional Embed --- */}
+        {platform === "YouTube" && videoId ? (
+          <YouTubeEmbed videoId={videoId} title={playthrough.title} />
         ) : (
-          <div className='w-full h-full flex items-center justify-center text-muted-foreground bg-card'>
-            Invalid YouTube URL or Video ID not found. Cannot embed video.
-            <br />
-            <a
-              href={playthrough.video_url}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='text-primary hover:underline ml-2'
-            >
-              Watch on source site
-            </a>
+          /* TODO: Add TwitchEmbed component here based on platform/videoId */
+          // : platform === 'Twitch' && videoId ? (
+          //    <TwitchEmbed videoId={videoId} />
+          // )
+          <div className='w-full h-full flex items-center justify-center text-muted-foreground p-4 text-center'>
+            Video player could not be loaded for this source. <br /> Try
+            watching on the original platform.
           </div>
         )}
+        {/* ------------------------- */}
       </div>
 
-      {/* Link to original video */}
-      <div className='text-center mb-6'>
-        <Button
-          asChild
-          variant='ghost'
-          className='hidden sm:inline-flex text-primary hover:text-primary/90 hover:bg-primary/15'
-        >
-          <Link
-            href={playthrough.video_url}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Watch original on {playthrough.platform || "Source"}
-            <ArrowRight className='ml-2 h-4 w-4' />
-          </Link>
-        </Button>
-      </div>
-
-      {/* Description (if available) */}
+      {/* --- Description Section with Typography --- */}
       {playthrough.description && (
-        <div className='prose prose-invert dark:prose-invert max-w-none bg-card p-4 rounded shadow'>
-          <h3 className='text-lg font-semibold mb-2 text-foreground'>
-            Description
-          </h3>
-          <p className='text-sm text-muted-foreground'>
-            {playthrough.description}
-          </p>
+        <div className='max-w-3xl mx-auto prose prose-sm dark:prose-invert prose-p:text-muted-foreground prose-headings:text-foreground'>
+          <h2 className='text-xl font-semibold mb-3'>Description</h2>
+          <p>{playthrough.description}</p>
         </div>
       )}
-
-      {/* TODO: Add comments section later? */}
-      {/* TODO: Add related videos section later? */}
+      {/* ------------------------------------------ */}
     </div>
   );
 }
