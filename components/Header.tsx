@@ -6,7 +6,6 @@ export default function Header() {
   return (
     <header className='sticky top-0 z-40 w-full border-b border-border/80 bg-card/80 backdrop-blur-lg transition-colors duration-300 ease-in-out'>
       <nav className='container mx-auto px-4 h-16 flex justify-between items-center'>
-        {/* Logo? */}
         <Link
           href='/'
           className='group font-bold text-xl text-foreground hover:text-primary transition-colors flex items-center gap-2'
@@ -26,13 +25,13 @@ export default function Header() {
             Playthroughs
           </Link>
 
-          {/* Placeholders for now*/}
           <Link
             href='/about'
             className='text-sm font-medium text-muted-foreground hover:text-primary transition-colors'
           >
             About
           </Link>
+          {/* Placeholders for now*/}
           <Button size='sm' variant='secondary'>
             Submit
           </Button>
