@@ -1,4 +1,3 @@
-// lib/supabase/server.ts
 import { createServerClient } from "@supabase/ssr";
 import { type ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 

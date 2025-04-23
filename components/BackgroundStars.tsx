@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import {
-  type Container,
+  //type Container,
   type ISourceOptions,
   MoveDirection,
   OutMode,
@@ -25,9 +25,11 @@ export default function BackgroundStars({ id }: SectionParticlesProps) {
     });
   }, []);
 
+  /*
   const particlesLoaded = async (container?: Container): Promise<void> => {
     console.log(container);
   };
+  */
 
   const particleOptions: ISourceOptions = useMemo(
     () => ({
@@ -78,7 +80,7 @@ export default function BackgroundStars({ id }: SectionParticlesProps) {
       {init && (
         <Particles
           id={id}
-          particlesLoaded={particlesLoaded}
+          //particlesLoaded={particlesLoaded}
           options={particleOptions}
           className='absolute inset-0'
         />
