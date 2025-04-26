@@ -12,7 +12,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
-import { Orbit, Menu, X } from "lucide-react";
+import { Orbit, Menu } from "lucide-react";
 
 export default function Header() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
